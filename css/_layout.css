@@ -1,0 +1,15 @@
+#game-area {
+  margin: auto;
+  width: 640px;
+  height: 580px;
+  padding: 45px;
+  box-sizing: border-box;
+  border: 1px solid darkgrey;
+}
+
+#game-canvas {
+  margin: auto;
+  display: block;
+  border: 1px solid darkgrey;
+  }
+

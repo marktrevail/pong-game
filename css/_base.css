@@ -4,9 +4,16 @@
 @import url('https://fonts.googleapis.com/css?family=Audiowide&display=swap');
 @import url('https://fonts.googleapis.com/css?family=Source+Code+Pro&display=swap');
 
-  * {
+* {
   font-size: 32px;
   font-family: 'Audiowide', cursive;
   /* font-family: 'Press Start 2P', cursive; */
   /* font-family: 'Source Code Pro', monospace; */
 }
+
+header {
+  display:flex;
+  justify-content: center;
+  margin: 40px 0 40px 0;
+}
+
