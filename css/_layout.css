@@ -4,12 +4,12 @@
   height: 580px;
   padding: 45px;
   box-sizing: border-box;
-  border: 1px solid darkgrey;
+  border: 1px solid black;
 }
 
 #game-canvas {
   margin: auto;
   display: block;
-  border: 1px solid darkgrey;
+  border:  1px solid black;
   }
 
