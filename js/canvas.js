@@ -1,13 +1,9 @@
-// ---------------------------------------------------------------------------------------------
-// The overall canvas
-// ---------------------------------------------------------------------------------------------
-
 class GameCanvas {
 
   constructor(width, height, lineColour, backgroundColour) {
     this.width = width;
     this.height = height;
-      this.lineColour = lineColour;
+    this.lineColour = lineColour;
     this.backgroundColour = backgroundColour;  
     this.ctx = "";
   }
@@ -51,4 +47,9 @@ class GameCanvas {
     this.ctx.strokeStyle = this.lineColour;
     this.ctx.stroke();
   }
+
+  clear() {
+    this.ctx.clearRect(0, 0, this.width, this.height);
+  }
+
 };

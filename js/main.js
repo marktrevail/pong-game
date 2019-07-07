@@ -18,10 +18,11 @@ $(function() {
 
   function animationStep() {
 
-    // ball.updatePos();
+    ball.updatePos();
     // player1.updatePos();
     // player2.updatePos();
 
+    gameCanvas.clear();
     gameCanvas.render();
     ball.render();
     // player1.render();
