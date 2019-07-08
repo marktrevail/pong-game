@@ -22,7 +22,6 @@ class GameCanvas {
     container.appendChild(canvas);
   };
 
-
   // Draws the background
   render() {
     this.ctx.beginPath();
