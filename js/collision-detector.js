@@ -7,12 +7,25 @@ class CollisionDetector{
   };
 
   updateBallSpeed() {
-    if(this.ball.posX <= 0 || this.ball.posX >= this.canvas.width) {
-      this.ball.speedX *= -1;
+
+    // Update edge values
+    this.ball.xLeft = this.ball.xCenter - this.ball.radius;
+    this.ball.xRight = this.ball.xCenter + this.ball.radius;
+
+    this.ball.yTop = this.ball.yCenter - this.ball.radius;
+    this.ball.yBottom = this.ball.yCenter + this.ball.radius;
+
+    // Check vs boundaries
+    if(this.ball.xLeft <= 0 || this.ball.xRight >= this.canvas.width) {
+      this.ball.xSpeed *= -1;
     }
-    if(this.ball.posY <= 0 || this.ball.posY >= this.canvas.height) {
-      this.ball.speedY *= -1;
+    if(this.ball.yTop <= 0 || this.ball.yBottom >= this.canvas.height) {
+      this.ball.ySpeed *= -1;
     }
+
+    // Check vs bats
+    
+
   }
 
 };

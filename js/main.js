@@ -10,8 +10,10 @@ $(function() {
   gameCanvas.render(); // Add the background to the canvas
 
   // Create the game objects
-  var ball = new Ball(gameCanvas.ctx, 6, "green", gameCanvas.width/2, gameCanvas.height/2, 2, 2); // Start ball in the middle
-  var collisionDetector = new CollisionDetector(gameCanvas, ball, "player1", "player2");
+  var ball = new Ball(gameCanvas.ctx, 6, "green", gameCanvas.width/2, gameCanvas.height/2, 6, 7); // Start ball in the middle
+  var player1 = new Bat(gameCanvas.ctx, 10, 50, "black", 15, gameCanvas.height/2, 10);
+  var player2 = new Bat(gameCanvas.ctx, 10, 50, "black", gameCanvas.width - 15, gameCanvas.height/2, 10);
+  var collisionDetector = new CollisionDetector(gameCanvas, ball, player1, player2);
 
   // --------------------------------------------------------------------------------------
   // Define animation order (with the objects just created)
@@ -31,6 +33,8 @@ $(function() {
     gameCanvas.clear();
     gameCanvas.render();
     ball.render();
+    player1.render();
+    player2.render();
     // player1.render();
     // player2.render();
 
@@ -45,3 +49,4 @@ $(function() {
   window.requestAnimationFrame(animationStep);
 
 });
+
