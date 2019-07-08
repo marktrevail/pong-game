@@ -26,4 +26,16 @@ class Bat {
   }
 
 
+  updatePos() {
+
+    // Something here
+
+    // Then...
+    this.xLeft = this.xCenter - this.width/2;
+    this.xRight = this.xCenter + this.width/2;
+
+    this.yTop = this.yCenter - this.height/2;
+    this.yBottom = this.yCenter + this.height/2;
+  }
+
 }

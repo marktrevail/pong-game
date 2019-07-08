@@ -10,7 +10,6 @@ class Ball {
 
     this.xLeft = this.xCenter - this.radius;
     this.xRight = this.xCenter + this.radius;
-
     this.yTop = this.yCenter - this.radius;
     this.yBottom = this.yCenter + this.radius;
   }
@@ -25,6 +24,12 @@ class Ball {
   updatePos() {
     this.xCenter += this.xSpeed;
     this.yCenter += this.ySpeed;
+
+    this.xLeft = this.xCenter - this.radius;
+    this.xRight = this.xCenter + this.radius;
+
+    this.yTop = this.yCenter - this.radius;
+    this.yBottom = this.yCenter + this.radius;
   }
 
 };

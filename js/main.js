@@ -10,7 +10,7 @@ $(function() {
   gameCanvas.render(); // Add the background to the canvas
 
   // Create the game objects
-  var ball = new Ball(gameCanvas.ctx, 6, "green", gameCanvas.width/2, gameCanvas.height/2, 6, 7); // Start ball in the middle
+  var ball = new Ball(gameCanvas.ctx, 7, "green", gameCanvas.width/2, gameCanvas.height/2, 8, 13); // Start ball in the middle
   var player1 = new Bat(gameCanvas.ctx, 10, 50, "black", 15, gameCanvas.height/2, 10);
   var player2 = new Bat(gameCanvas.ctx, 10, 50, "black", gameCanvas.width - 15, gameCanvas.height/2, 10);
   var collisionDetector = new CollisionDetector(gameCanvas, ball, player1, player2);
