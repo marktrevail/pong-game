@@ -44,7 +44,7 @@ class GameManager{
     };
   };
 
-  updateBatPos() {
+  updateBatSpeed() {
 
     // Player 1 ---------------------
   
