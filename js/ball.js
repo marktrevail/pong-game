@@ -25,9 +25,9 @@ class Ball {
     this.xCenter += this.xSpeed;
     this.yCenter += this.ySpeed;
 
+    // Update the edge values too
     this.xLeft = this.xCenter - this.radius;
     this.xRight = this.xCenter + this.radius;
-
     this.yTop = this.yCenter - this.radius;
     this.yBottom = this.yCenter + this.radius;
   }
