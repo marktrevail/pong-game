@@ -47,13 +47,13 @@ class GameManager{
   updateBatSpeed() {
 
     // Player 1 ---------------------
-  
+
     // q (up)
-    if (81 in this.keys) {
+    if (81 in this.keys && this.player1.yTop > 0) {   // Not hitting boundary
       this.player1.ySpeed = -this.player1.ySpeedMax;
     } else
     // a (down)
-    if (65 in this.keys) {
+    if (65 in this.keys && this.player1.yBottom < this.canvas.height) {
       this.player1.ySpeed = this.player1.ySpeedMax;
     } else
     // No speed
@@ -62,11 +62,11 @@ class GameManager{
     // Player 2 ---------------------
 
     // up
-    if (38 in this.keys) {
+    if (38 in this.keys && this.player2.yTop > 0) {
       this.player2.ySpeed = -this.player2.ySpeedMax;
     } else
     // down
-    if (40 in this.keys) {
+    if (40 in this.keys && this.player2.yBottom < this.canvas.height) {
       this.player2.ySpeed = this.player2.ySpeedMax;
     } else
     // No speed
