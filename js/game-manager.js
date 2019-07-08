@@ -4,7 +4,6 @@ class GameManager{
     this.ball = ball;
     this.player1 = player1;
     this.player2 = player2;
-    this.batSpeedIncrement = 1;
     this.keys = {};
   };
 
@@ -35,14 +34,28 @@ class GameManager{
     }
   }
 
-  updateBatSpeed() {
+  updateBatPos() {
+
+    // Player 1 ---------------------
+  
+    // q (up)
+    if (81 in this.keys) {
+      this.player1.yCenter -= this.player1.topYSpeed;
+  }
+    // a (down)
+    if (65 in this.keys) {
+      this.player1.yCenter += this.player1.topYSpeed;
+    }
+  
+    // Player 2 ---------------------
+
     // up
     if (38 in this.keys) {
-        this.player2.ySpeed -= this.batSpeedIncrement;
-    }
+      this.player2.yCenter -= this.player2.topYSpeed;
+  }
     // down
     if (40 in this.keys) {
-      this.player2.ySpeed += this.batSpeedIncrement;
+      this.player2.yCenter += this.player2.topYSpeed;
     }
   }
 };

@@ -11,8 +11,8 @@ $(function() {
 
   // Create the game objects
   var ball = new Ball(gameCanvas.ctx, 7, "green", gameCanvas.width/2, gameCanvas.height/2, 8, 7); // Start ball in the middle
-  var player1 = new Bat(gameCanvas.ctx, 10, 50, "black", 15, gameCanvas.height/2, 10);
-  var player2 = new Bat(gameCanvas.ctx, 10, 50, "black", gameCanvas.width - 15, gameCanvas.height/2, 10);
+  var player1 = new Bat(gameCanvas.ctx, 10, 50, "black", 15, gameCanvas.height/2, 10, 5);
+  var player2 = new Bat(gameCanvas.ctx, 10, 50, "black", gameCanvas.width - 15, gameCanvas.height/2, 10, 5);
   var gameManager = new GameManager(gameCanvas, ball, player1, player2);
 
   // Set up the listeners for keystrokes
@@ -34,7 +34,7 @@ $(function() {
     gameManager.updateBallSpeed();
 
     // Keystrokes: Check for keystrokes and update speeds
-    gameManager.updateBatSpeed();
+    gameManager.updateBatPos();
 
     // Moving (back end): Update object positions (back end) according to their speeds
     ball.updatePos();

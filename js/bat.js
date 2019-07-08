@@ -1,5 +1,5 @@
 class Bat {
-  constructor(context, width, height, fillColor, xCenter, yCenter, health) {
+  constructor(context, width, height, fillColor, xCenter, yCenter, health, topYSpeed) {
     this.ctx = context;
     this.width = width;
     this.height = height;
@@ -9,6 +9,7 @@ class Bat {
     this.yCenter = yCenter;
  
     this.health = health;
+    this.topYSpeed = topYSpeed;
  
     this.score = 0;
     this.ySpeed = 0;
