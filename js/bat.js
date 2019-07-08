@@ -11,7 +11,7 @@ class Bat {
     this.health = health;
  
     this.score = 0;
-    this.speedY = 0;
+    this.ySpeed = 0;
 
     this.xLeft = this.xCenter - this.width/2;
     this.xRight = this.xCenter + this.width/2;
@@ -28,9 +28,8 @@ class Bat {
 
   updatePos() {
 
-    // Something here
+    this.yCenter += this.ySpeed;
 
-    // Then...
     this.xLeft = this.xCenter - this.width/2;
     this.xRight = this.xCenter + this.width/2;
 

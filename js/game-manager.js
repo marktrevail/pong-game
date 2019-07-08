@@ -1,9 +1,11 @@
-class CollisionDetector{
+class GameManager{
   constructor(canvas, ball, player1, player2) {
     this.canvas = canvas;
     this.ball = ball;
     this.player1 = player1;
     this.player2 = player2;
+    this.batSpeedIncrement = 1;
+    this.keys = {};
   };
 
   updateBallSpeed() {
@@ -31,8 +33,16 @@ class CollisionDetector{
          {
       this.ball.xSpeed *= -1;
     }
-
-
   }
 
+  updateBatSpeed() {
+    // up
+    if (38 in this.keys) {
+        this.player2.ySpeed -= this.batSpeedIncrement;
+    }
+    // down
+    if (40 in this.keys) {
+      this.player2.ySpeed += this.batSpeedIncrement;
+    }
+  }
 };

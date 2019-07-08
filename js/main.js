@@ -10,10 +10,19 @@ $(function() {
   gameCanvas.render(); // Add the background to the canvas
 
   // Create the game objects
-  var ball = new Ball(gameCanvas.ctx, 7, "green", gameCanvas.width/2, gameCanvas.height/2, 8, 13); // Start ball in the middle
+  var ball = new Ball(gameCanvas.ctx, 7, "green", gameCanvas.width/2, gameCanvas.height/2, 8, 7); // Start ball in the middle
   var player1 = new Bat(gameCanvas.ctx, 10, 50, "black", 15, gameCanvas.height/2, 10);
   var player2 = new Bat(gameCanvas.ctx, 10, 50, "black", gameCanvas.width - 15, gameCanvas.height/2, 10);
-  var collisionDetector = new CollisionDetector(gameCanvas, ball, player1, player2);
+  var gameManager = new GameManager(gameCanvas, ball, player1, player2);
+
+  // Set up the listeners for keystrokes
+  window.addEventListener("keydown", function (e) {
+    gameManager.keys[e.keyCode] = true;
+    e.preventDefault();
+  })
+  window.addEventListener("keyup", function (e) {
+    delete gameManager.keys[e.keyCode];
+  })
 
   // --------------------------------------------------------------------------------------
   // Define animation order (with the objects just created)
@@ -22,12 +31,15 @@ $(function() {
   function animationStep() {
 
     // Collisions: Check for collisions and update speeds
-    collisionDetector.updateBallSpeed();
+    gameManager.updateBallSpeed();
 
-    // Moving: Update positions according to the speed
+    // Keystrokes: Check for keystrokes and update speeds
+    gameManager.updateBatSpeed();
+
+    // Moving (back end): Update object positions (back end) according to their speeds
     ball.updatePos();
-    // player1.updatePos();
-    // player2.updatePos();
+    player1.updatePos();
+    player2.updatePos();
 
     // Render: Render all objects on the canvas
     gameCanvas.clear();
