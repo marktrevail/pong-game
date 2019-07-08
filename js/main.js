@@ -10,9 +10,10 @@ $(function() {
   gameCanvas.render(); // Add the background to the canvas
 
   // Create the game objects
-  var ball = new Ball(gameCanvas.ctx, 7, "green", gameCanvas.width/2, gameCanvas.height/2, 8, 6);
+  var ball = new Ball(gameCanvas.ctx, 7, "green", gameCanvas.width/2, gameCanvas.height/2, 8, 5);
   var player1 = new Bat(gameCanvas.ctx, 10, 50, "black", 15, gameCanvas.height/2, 10, 7);
   var player2 = new Bat(gameCanvas.ctx, 10, 50, "black", gameCanvas.width - 15, gameCanvas.height/2, 10, 7);
+  
   var gameManager = new GameManager(gameCanvas, ball, player1, player2);
 
   // Set up keystroke listening
@@ -24,9 +25,10 @@ $(function() {
 
   function animationStep() {
 
-    // Update speeds (back end) - of game objects - checking for collisions and keystrokes 
-    gameManager.updateBallSpeed();  // Check for collisions
-    gameManager.updateBatSpeed();   // Check for keystrokes
+    // Game manager - check for collisions and keystrokes - update speeds, health, score
+    gameManager.updateBallSpeed();  // Check for collisions and update ball speed
+    gameManager.updateBatSpeed();   // Check for keystrokes and update bat speeds
+    gameManager.updateHealthAndScore(); // Check for point scores and update health and score
 
     // Update positions (back end) - of game objects, according to their speeds
     ball.updatePos();
@@ -39,6 +41,7 @@ $(function() {
     ball.render();
     player1.render();
     player2.render();
+    gameManager.renderHealthAndScore();
 
     // Loop
     window.requestAnimationFrame(animationStep);

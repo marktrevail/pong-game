@@ -5,7 +5,7 @@
 @import url('https://fonts.googleapis.com/css?family=Source+Code+Pro&display=swap');
 
 * {
-  font-size: 32px;
+  font-size: 8px;
   font-family: 'Audiowide', cursive;
   /* font-family: 'Press Start 2P', cursive; */
   /* font-family: 'Source Code Pro', monospace; */
@@ -14,6 +14,16 @@
 header {
   display:flex;
   justify-content: center;
-  margin: 40px 0 40px 0;
+  margin: 20px 0 20px 0;
 }
 
+h1{
+  font-size: 4em;
+  font-weight:normal;
+}
+
+#game-area span{
+  font-size: 2em;
+  font-weight:normal;
+  margin: 20px 10px 0 0;
+}

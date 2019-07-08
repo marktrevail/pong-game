@@ -72,4 +72,32 @@ class GameManager{
     // No speed
     {this.player2.ySpeed = 0;}
   }
+
+  updateHealthAndScore() {
+    if(this.ball.xLeft <= 0) {
+      this.player1.health -= 1;
+      console.log(`Player 1's health updated to ${this.player1.health}`);
+    }
+    if(this.ball.xRight >= this.canvas.width) {
+      this.player2.health -= 1;
+      console.log(`Player 2's health updated to ${this.player2.health}`);
+    }
+    if(this.player1.health === 0) {
+      this.player1.score += 1;
+      console.log(this.player1.score)
+    }
+    if(this.player2.health === 0) {
+      this.player2.score += 1;
+    }
+  }
+
+  renderHealthAndScore() {
+    $("#health-player-1").html(this.player1.health);
+    $("#health-player-2").html(this.player2.health);
+    $("#score-player-1").html(this.player1.score);
+    $("#score-player-2").html(this.player2.score);
+  }
+
 };
+
+

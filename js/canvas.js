@@ -19,7 +19,7 @@ class GameCanvas {
     canvas.width  = this.width;
     canvas.height = this.height;
     
-    container.appendChild(canvas);
+    container.prepend(canvas);
   };
 
   // Draws the background
