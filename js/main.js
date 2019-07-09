@@ -12,10 +12,10 @@ $(function() {
   // Set up a new game
   // --------------------------------------------------------------------------------------
 
-  // Create the game objects
-  var ball = new Ball(gameCanvas.ctx, 7, "green", gameCanvas.width/2, gameCanvas.height/2, 80, 20);
-  var player1 = new Bat(gameCanvas.ctx, 10, 50, "black", 15, gameCanvas.height/2, 10, 7);
-  var player2 = new Bat(gameCanvas.ctx, 10, 50, "black", gameCanvas.width - 15, gameCanvas.height/2, 10, 7);
+  // Create the game objects and initial positions & speeds
+  var ball = new Ball(gameCanvas.ctx, 7, "green", gameCanvas.width/2, gameCanvas.height/2, 3, 0);
+  var player1 = new Bat(gameCanvas.ctx, 10, 60, "black", 15, gameCanvas.height/2, 2, 5);
+  var player2 = new Bat(gameCanvas.ctx, 10, 60, "black", gameCanvas.width - 15, gameCanvas.height/2, 2, 5);
   
   var gameManager = new GameManager(gameCanvas, ball, player1, player2);
 
@@ -57,23 +57,35 @@ $(function() {
   // Create functions for Start next game, and Reset game
   // --------------------------------------------------------------------------------------
 
-  function startNextGame() {
-    doGameAnimation = true;
+  function resetForNextGame() {
     gameManager.resetHealths();
-    gameManager.renderHealthAndScore();
+    ball.resetSpeed();
+    ball.resetPos();
+    player1.resetPos();
+    player2.resetPos();
 
-    gameCanvas.renderCountdown( );    
-    setTimeout(()=>{window.requestAnimationFrame(gameAnimationStep)}, 1500);  // TODO! Fix this to use Promises or callbacks from countdown
-  };
+    gameManager.renderHealthAndScore();    
+  }
 
-  function resetGame() {   // TODO! Doesn't work during countdown
+  function resetForNewGame() {
     doGameAnimation = false;
     gameManager.resetHealths();
     gameManager.resetScores();
+    ball.resetSpeed();
+    ball.resetPos();
+    player1.resetPos();
+    player2.resetPos();
+
     gameManager.renderHealthAndScore();    
     gameCanvas.renderStartScreen();
-  }
+  };
 
+  function startNextGame() {
+    resetForNextGame();
+    doGameAnimation = true;
+    gameCanvas.renderCountdown();    
+    setTimeout(()=>{window.requestAnimationFrame(gameAnimationStep)}, 1500);  // TODO! Fix this to use Promises or callbacks from countdown
+  };
 
   // --------------------------------------------------------------------------------------
   // Load the start screen, and allow starting the game on click!
@@ -81,7 +93,7 @@ $(function() {
 
   gameCanvas.renderStartScreen();
   $("#game-canvas").on("click", startNextGame);  // Set up START event listener (click on canvas)
-  $("#button-reset").on("click", resetGame);  // Set up RESET event listener (click on reset button)
+  $("#button-reset").on("click", resetForNewGame);  // Set up RESET event listener (click on reset button)
 
 
 

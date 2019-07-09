@@ -17,6 +17,15 @@ class GameManager{
     });
   };
 
+  calcBallYSpeedAdjuster(bat) {  // When hitting a bat, the ball's Y speed gets adjusted depending on WHERE it hits on the bat
+    let ySpeedAdjuster = ( (this.ball.yCenter - bat.yCenter) / bat.height ) * 1.2 * this.ball.xSpeed  // The 1.2 just makes the effect more extreme
+    if(this.ball.xSpeed < 0) {
+      return -ySpeedAdjuster;
+    } else {
+      return ySpeedAdjuster;
+    };
+  };
+
   updateBallSpeed() {
 
     // Check vs boundaries
@@ -32,7 +41,8 @@ class GameManager{
          && (this.ball.yBottom >= this.player1.yTop && this.ball.yTop <= this.player1.yBottom)
          && this.ball.xSpeed < 0 )   // Travelling left (as don't want ball to get stuck between wall and bat)
          {
-      this.ball.xSpeed *= -1;
+      this.ball.xSpeed *= -1;  // Reverse direction of ball
+      this.ball.ySpeed += this.calcBallYSpeedAdjuster(this.player1);
     };
 
     // Check vs Player 2
@@ -41,6 +51,7 @@ class GameManager{
          && this.ball.xSpeed >= 0 )   // Travelling right         
          {
       this.ball.xSpeed *= -1;
+      this.ball.ySpeed += this.calcBallYSpeedAdjuster(this.player2);
     };
   };
 
@@ -93,6 +104,16 @@ class GameManager{
     }
   }
 
+  resetHealths() {
+    this.player1.health = this.player1.healthInitial;
+    this.player2.health = this.player2.healthInitial;
+  }
+
+  resetScores() {
+    this.player1.score = 0;
+    this.player2.score = 0;
+  }
+
   renderHealthAndScore() {
     $("#health-player-1").html(this.player1.health);
     $("#health-player-2").html(this.player2.health);
@@ -103,22 +124,10 @@ class GameManager{
   checkForWin() {
     if(this.player1.health === 0) {
       this.canvas.renderWinScreen("Player 2");
-      this.resetHealths();
     }
     if(this.player2.health === 0) {
       this.canvas.renderWinScreen("Player 1");
-      this.resetHealths();
     }
-  }
-
-  resetHealths() {
-    this.player1.health = 10;  // TODO! Not hardcode max health
-    this.player2.health = 10;  // TODO! Not hardcode max health
-  }
-
-  resetScores() {
-    this.player1.score = 0;
-    this.player2.score = 0;
   }
 
 };

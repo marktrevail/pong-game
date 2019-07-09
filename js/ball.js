@@ -1,18 +1,24 @@
 class Ball {
-  constructor(context, radius, fillColor, xCenter, yCenter, xSpeed, ySpeed) {
+  constructor(context, radius, fillColor, xCenterInitial, yCenterInitial, xSpeedInitial, ySpeedInitial) {
     this.ctx = context;
     this.radius = radius;
     this.fillColor = fillColor; 
-    this.xCenter = xCenter;
-    this.yCenter = yCenter;
-    this.xSpeed = xSpeed;
-    this.ySpeed = ySpeed;
+
+    this.xCenterInitial = xCenterInitial;
+    this.yCenterInitial = yCenterInitial;
+    this.xSpeedInitial = xSpeedInitial;
+    this.ySpeedInitial = ySpeedInitial;
+
+    this.xCenter = xCenterInitial;
+    this.yCenter = yCenterInitial;
+    this.xSpeed = xSpeedInitial;
+    this.ySpeed = ySpeedInitial;
 
     this.xLeft = this.xCenter - this.radius;
     this.xRight = this.xCenter + this.radius;
     this.yTop = this.yCenter - this.radius;
     this.yBottom = this.yCenter + this.radius;
-  }
+  };
 
   render() {
     this.ctx.beginPath();
@@ -30,6 +36,16 @@ class Ball {
     this.xRight = this.xCenter + this.radius;
     this.yTop = this.yCenter - this.radius;
     this.yBottom = this.yCenter + this.radius;
+  }
+
+  resetSpeed() {
+    this.xSpeed = this.xSpeedInitial;
+    this.ySpeed = this.ySpeedInitial;
+  };
+
+  resetPos() {
+    this.xCenter = this.xCenterInitial;
+    this.yCenter = this.yCenterInitial;
   }
 
 };

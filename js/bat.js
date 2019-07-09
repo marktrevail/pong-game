@@ -1,14 +1,17 @@
 class Bat {
-  constructor(context, width, height, fillColor, xCenter, yCenter, health, ySpeedMax) {
+  constructor(context, width, height, fillColor, xCenterInitial, yCenterInitial, healthInitial, ySpeedMax) {
     this.ctx = context;
     this.width = width;
     this.height = height;
     this.fillColor = fillColor;
  
-    this.xCenter = xCenter;
-    this.yCenter = yCenter;
+    this.xCenterInitial = xCenterInitial;
+    this.yCenterInitial = yCenterInitial;
+    this.xCenter = xCenterInitial;
+    this.yCenter = yCenterInitial;
  
-    this.health = health;
+    this.healthInitial = healthInitial;
+    this.health = healthInitial;
     this.ySpeedMax = ySpeedMax;
  
     this.score = 0;
@@ -35,6 +38,13 @@ class Bat {
     this.xRight = this.xCenter + this.width/2;
     this.yTop = this.yCenter - this.height/2;
     this.yBottom = this.yCenter + this.height/2;
+  };
+
+  resetPos() {
+    this.xCenter = this.xCenterInitial;
+    this.yCenter = this.yCenterInitial;
+    this.xCenter = this.xCenterInitial;
+    this.yCenter = this.yCenterInitial;
   }
 
-}
+};
