@@ -86,11 +86,10 @@ class GameManager{
 
     // Score
     if(this.player1.health === 0) {
-      this.player1.score += 1;
-      console.log(this.player1.score)
+      this.player2.score += 1;
     }
     if(this.player2.health === 0) {
-      this.player2.score += 1;
+      this.player1.score += 1;
     }
   }
 
@@ -103,11 +102,11 @@ class GameManager{
 
   checkForWin() {
     if(this.player1.health === 0) {
-      this.canvas.renderWinScreen("Player 1");
+      this.canvas.renderWinScreen("Player 2");
       this.resetHealths();
     }
     if(this.player2.health === 0) {
-      this.canvas.renderWinScreen("Player 2");
+      this.canvas.renderWinScreen("Player 1");
       this.resetHealths();
     }
   }
@@ -117,15 +116,9 @@ class GameManager{
     this.player2.health = 10;  // TODO! Not hardcode max health
   }
 
-  resetGame() {
-    this.resetHealths;
+  resetScores() {
     this.player1.score = 0;
     this.player2.score = 0;
-
-    this.canvas.renderStartScreen();
-    this.canvas.renderHealthAndScore();
   }
 
 };
-
-

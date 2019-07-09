@@ -53,6 +53,7 @@ class GameCanvas {
   }
 
   renderStartScreen() {
+    this.clear();
     this.renderGameBackground(); // Add the background to the canvas
     this.ctx.fillStyle = "green";
     this.ctx.textBaseline = "middle";
@@ -78,12 +79,12 @@ class GameCanvas {
     setTimeout(()=> {
       this.clear();
       this.ctx.fillText("2", (this.width / 2), (this.height / 2)); 
-    }, 1000);
+    }, 500);
 
     setTimeout(()=> {
       this.clear();
       this.ctx.fillText("1", (this.width / 2), (this.height / 2)); 
-    }, 2000);
+    }, 1000);
   };
 
   renderWinScreen(winner) {

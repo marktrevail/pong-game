@@ -1,12 +1,3 @@
-#points-container-all {
-  display: flex;
-  justify-content: space-between;
-}
-
-.health-container {
-  display: flex;
-}
-
-.score-container {
-  display: flex;
+#button-reset {
+  font-size: 2em;
 }

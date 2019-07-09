@@ -13,3 +13,22 @@
   border:  1px solid black;
   }
 
+  #points-container-all {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .health-container {
+    display: flex;
+  }
+  
+  .score-container {
+    display: flex;
+  }
+
+.button-container{
+  display: flex;
+  margin: 20px;
+  justify-content: flex-end;
+}
+

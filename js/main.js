@@ -54,7 +54,7 @@ $(function() {
   };
 
   // --------------------------------------------------------------------------------------
-  // Create start new / next game function
+  // Create functions for Start next game, and Reset game
   // --------------------------------------------------------------------------------------
 
   function startNextGame() {
@@ -63,15 +63,25 @@ $(function() {
     gameManager.renderHealthAndScore();
 
     gameCanvas.renderCountdown( );    
-    setTimeout(()=>{window.requestAnimationFrame(gameAnimationStep)}, 3000);  // TODO! Fix this to use Promises or callbacks from countdown
+    setTimeout(()=>{window.requestAnimationFrame(gameAnimationStep)}, 1500);  // TODO! Fix this to use Promises or callbacks from countdown
   };
+
+  function resetGame() {   // TODO! Doesn't work during countdown
+    doGameAnimation = false;
+    gameManager.resetHealths();
+    gameManager.resetScores();
+    gameManager.renderHealthAndScore();    
+    gameCanvas.renderStartScreen();
+  }
+
 
   // --------------------------------------------------------------------------------------
   // Load the start screen, and allow starting the game on click!
   // --------------------------------------------------------------------------------------
 
   gameCanvas.renderStartScreen();
-  $("#game-canvas").on("click", startNextGame);
+  $("#game-canvas").on("click", startNextGame);  // Set up START event listener (click on canvas)
+  $("#button-reset").on("click", resetGame);  // Set up RESET event listener (click on reset button)
 
 
 
