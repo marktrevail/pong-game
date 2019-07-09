@@ -13,14 +13,20 @@ $(function() {
   // --------------------------------------------------------------------------------------
 
   // Create the game objects and initial positions & speeds
-  var ball = new Ball(gameCanvas.ctx, 7, "green", gameCanvas.width/2, gameCanvas.height/2, 3, 0);
-  var player1 = new Bat(gameCanvas.ctx, 10, 60, "black", 15, gameCanvas.height/2, 2, 5);
-  var player2 = new Bat(gameCanvas.ctx, 10, 60, "black", gameCanvas.width - 15, gameCanvas.height/2, 2, 5);
+  var ball = new Ball(gameCanvas.ctx, 7, "green", gameCanvas.width/2, gameCanvas.height/2, 6, 0);
+  var player1 = new Bat(gameCanvas.ctx, 10, 60, "black", 15, gameCanvas.height/2, 5, 5);
+  var player2 = new Bat(gameCanvas.ctx, 10, 60, "black", gameCanvas.width - 15, gameCanvas.height/2, 5, 5);
   
   var gameManager = new GameManager(gameCanvas, ball, player1, player2);
 
   // Set up keystroke listening
   gameManager.addKeystrokeListeners();
+
+  // Set up music
+  var soundIntro = new Sound("./aud/intro-screen.mp3", true);
+  var soundGame = new Sound("./aud/defense-line.mp3", true);
+  soundIntro.sound.volume = 0.3;
+  soundGame.sound.volume = 0.3;
 
   // --------------------------------------------------------------------------------------
   // Define animation order (with the objects just created)
@@ -69,6 +75,10 @@ $(function() {
 
   function resetForNewGame() {
     doGameAnimation = false;
+
+    soundGame.stop();
+    soundIntro.play();
+
     gameManager.resetHealths();
     gameManager.resetScores();
     ball.resetSpeed();
@@ -83,6 +93,10 @@ $(function() {
   function startNextGame() {
     resetForNextGame();
     doGameAnimation = true;
+
+   soundIntro.stop();
+   soundGame.play();
+
     gameCanvas.renderCountdown();    
     setTimeout(()=>{window.requestAnimationFrame(gameAnimationStep)}, 1500);  // TODO! Fix this to use Promises or callbacks from countdown
   };
@@ -92,9 +106,9 @@ $(function() {
   // --------------------------------------------------------------------------------------
 
   gameCanvas.renderStartScreen();
+
   $("#game-canvas").on("click", startNextGame);  // Set up START event listener (click on canvas)
   $("#button-reset").on("click", resetForNewGame);  // Set up RESET event listener (click on reset button)
-
 
 
 });

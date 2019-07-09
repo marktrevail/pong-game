@@ -7,6 +7,9 @@ class GameManager{
     this.keys = {};
   };
 
+  soundPing = new Sound("./aud/ping.mp3", false);
+  soundHit = new Sound("./aud/hit.mp3", false);
+
   addKeystrokeListeners() {
     window.addEventListener("keydown", (e) => {
       this.keys[e.keyCode] = true;
@@ -31,6 +34,7 @@ class GameManager{
     // Check vs boundaries
     if(this.ball.xLeft <= 0 || this.ball.xRight >= this.canvas.width) {
       this.ball.xSpeed *= -1;
+      this.soundHit.play();
     };
     if(this.ball.yTop <= 0 || this.ball.yBottom >= this.canvas.height) {
       this.ball.ySpeed *= -1;
@@ -42,7 +46,8 @@ class GameManager{
          && this.ball.xSpeed < 0 )   // Travelling left (as don't want ball to get stuck between wall and bat)
          {
       this.ball.xSpeed *= -1;  // Reverse direction of ball
-      this.ball.ySpeed += this.calcBallYSpeedAdjuster(this.player1);
+      this.ball.ySpeed += this.calcBallYSpeedAdjuster(this.player1); // Adjust y speed
+      this.soundPing.play(); // Play sound
     };
 
     // Check vs Player 2
@@ -52,6 +57,7 @@ class GameManager{
          {
       this.ball.xSpeed *= -1;
       this.ball.ySpeed += this.calcBallYSpeedAdjuster(this.player2);
+      this.soundPing.play();
     };
   };
 
@@ -88,11 +94,9 @@ class GameManager{
     // Health
     if(this.ball.xLeft <= 0) {
       this.player1.health -= 1;
-      console.log(`Player 1's health updated to ${this.player1.health}`);
     }
     if(this.ball.xRight >= this.canvas.width) {
       this.player2.health -= 1;
-      console.log(`Player 2's health updated to ${this.player2.health}`);
     }
 
     // Score
