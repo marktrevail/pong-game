@@ -1,16 +1,19 @@
 $(function() {
 
   // --------------------------------------------------------------------------------------
-  // Set up the game
+  // Create the game area
   // --------------------------------------------------------------------------------------
 
   // Set up the canvas
   var gameCanvas = new GameCanvas(550, 340, "black", "white"); // Create a new canvas
   gameCanvas.create(); // Add the canvas in and create the context
-  gameCanvas.render(); // Add the background to the canvas
+
+  // --------------------------------------------------------------------------------------
+  // Set up a new game
+  // --------------------------------------------------------------------------------------
 
   // Create the game objects
-  var ball = new Ball(gameCanvas.ctx, 7, "green", gameCanvas.width/2, gameCanvas.height/2, 8, 5);
+  var ball = new Ball(gameCanvas.ctx, 7, "green", gameCanvas.width/2, gameCanvas.height/2, 80, 20);
   var player1 = new Bat(gameCanvas.ctx, 10, 50, "black", 15, gameCanvas.height/2, 10, 7);
   var player2 = new Bat(gameCanvas.ctx, 10, 50, "black", gameCanvas.width - 15, gameCanvas.height/2, 10, 7);
   
@@ -23,7 +26,9 @@ $(function() {
   // Define animation order (with the objects just created)
   // --------------------------------------------------------------------------------------
 
-  function animationStep() {
+  function gameAnimationStep() {
+
+    if(!doGameAnimation){context=null; return;}   // Breaks out of the animation if doGameAnimation is false
 
     // Game manager - check for collisions and keystrokes - update speeds, health, score
     gameManager.updateBallSpeed();  // Check for collisions and update ball speed
@@ -37,21 +42,38 @@ $(function() {
 
     // Render: Render all objects on the canvas in their new positions
     gameCanvas.clear();
-    gameCanvas.render();
+    gameCanvas.renderGameBackground();
     ball.render();
     player1.render();
     player2.render();
     gameManager.renderHealthAndScore();
+    gameManager.checkForWin();
 
     // Loop
-    window.requestAnimationFrame(animationStep);
+    window.requestAnimationFrame(gameAnimationStep);
   };
 
   // --------------------------------------------------------------------------------------
-  // Start!
+  // Create start new / next game function
   // --------------------------------------------------------------------------------------
 
-  window.requestAnimationFrame(animationStep);
+  function startNextGame() {
+    doGameAnimation = true;
+    gameManager.resetHealths();
+    gameManager.renderHealthAndScore();
+
+    gameCanvas.renderCountdown( );    
+    setTimeout(()=>{window.requestAnimationFrame(gameAnimationStep)}, 3000);  // TODO! Fix this to use Promises or callbacks from countdown
+  };
+
+  // --------------------------------------------------------------------------------------
+  // Load the start screen, and allow starting the game on click!
+  // --------------------------------------------------------------------------------------
+
+  gameCanvas.renderStartScreen();
+  $("#game-canvas").on("click", startNextGame);
+
+
 
 });
 

@@ -74,6 +74,7 @@ class GameManager{
   }
 
   updateHealthAndScore() {
+    // Health
     if(this.ball.xLeft <= 0) {
       this.player1.health -= 1;
       console.log(`Player 1's health updated to ${this.player1.health}`);
@@ -82,6 +83,8 @@ class GameManager{
       this.player2.health -= 1;
       console.log(`Player 2's health updated to ${this.player2.health}`);
     }
+
+    // Score
     if(this.player1.health === 0) {
       this.player1.score += 1;
       console.log(this.player1.score)
@@ -96,6 +99,31 @@ class GameManager{
     $("#health-player-2").html(this.player2.health);
     $("#score-player-1").html(this.player1.score);
     $("#score-player-2").html(this.player2.score);
+  }
+
+  checkForWin() {
+    if(this.player1.health === 0) {
+      this.canvas.renderWinScreen("Player 1");
+      this.resetHealths();
+    }
+    if(this.player2.health === 0) {
+      this.canvas.renderWinScreen("Player 2");
+      this.resetHealths();
+    }
+  }
+
+  resetHealths() {
+    this.player1.health = 10;  // TODO! Not hardcode max health
+    this.player2.health = 10;  // TODO! Not hardcode max health
+  }
+
+  resetGame() {
+    this.resetHealths;
+    this.player1.score = 0;
+    this.player2.score = 0;
+
+    this.canvas.renderStartScreen();
+    this.canvas.renderHealthAndScore();
   }
 
 };
