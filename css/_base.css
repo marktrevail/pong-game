@@ -39,3 +39,15 @@ h2{
   margin: 12px 0 0 0;
   background-color: green;  
 }
+
+#menu-area ul{
+  padding: 0;
+}
+
+#menu-area ul li{
+  font-size: 4em;
+  font-weight:normal;
+  margin: 50px 0;
+  text-align: center;
+  list-style: none;
+}

@@ -217,7 +217,6 @@ class GameManager{
     this.player2.resetPos();
 
     this.renderHealthAndScore();    
-    this.renderStartScreen();
   };
 
   startNextGame = () => {

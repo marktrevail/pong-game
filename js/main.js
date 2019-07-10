@@ -27,17 +27,27 @@ $(function() {
   gameManager.soundGame.sound.volume = 0.3;
 
   // --------------------------------------------------------------------------------------
-  // Load the start screen!
+  // Navigate the menu screen!
   // --------------------------------------------------------------------------------------
 
-  gameManager.renderStartScreen();
-  $("#button-reset").on("click", gameManager.resetForNewGame);  //Turn on reset event listener
+  $("#menu-start-2-player").on("click", start2PlayerGame);
+  $("#button-reset").on("click", resetForNewGameAndBackToMenu);
 
-  setInterval(() => {
-    console.log(ball.xSpeed)
-  }, 1000);
+  
+  function start2PlayerGame() {
+    gameManager.renderStartScreen();
+    $("#menu-area").toggle();
+    $("#game-area").toggle();
+  };
 
-    
+  function resetForNewGameAndBackToMenu() {
+    gameManager.resetForNewGame();
+    $("#menu-area").toggle();
+    $("#game-area").toggle();    
+  };
+
+
+
 
 });
 
