@@ -25,13 +25,17 @@ h1{
 h2{
   font-size: 2em;
   font-weight:normal;
-  color: green;
   margin: 20px 0 5px 0;
 }
-
 
 #game-area span{
   font-size: 2em;
   font-weight:normal;
   margin: 10px 10px 0 0;
+}
+
+#game-area progress{
+  font-size: 1.6em;
+  margin: 12px 0 0 0;
+  background-color: green;  
 }

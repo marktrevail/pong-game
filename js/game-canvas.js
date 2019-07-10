@@ -7,6 +7,7 @@ class GameCanvas {
     this.backgroundColour = backgroundColour;  
     this.canvas = "";
     this.ctx = "";
+    this.doGameAnimation = false;
   }
 
   // Adds the canvas into the page
@@ -51,51 +52,5 @@ class GameCanvas {
   clear() {
     this.ctx.clearRect(0, 0, this.width, this.height);
   }
-
-  renderStartScreen() {
-    this.clear();
-    this.renderGameBackground(); // Add the background to the canvas
-    this.ctx.fillStyle = "green";
-    this.ctx.textBaseline = "middle";
-    this.ctx.textAlign = "center";
-    this.ctx.font = "32px Audiowide";
-    this.ctx.fillText("Click to start", (this.width / 2), (this.height / 2));
-  };
-
-
-  sleep(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
-  };
-
-  renderCountdown() {
-
-    this.clear();
-    this.ctx.fillStyle = "green";
-    this.ctx.textBaseline = "middle";
-    this.ctx.textAlign = "center";
-    this.ctx.font = "32px Audiowide";
-    this.ctx.fillText("3", (this.width / 2), (this.height / 2)); 
-
-    setTimeout(()=> {
-      this.clear();
-      this.ctx.fillText("2", (this.width / 2), (this.height / 2)); 
-    }, 500);
-
-    setTimeout(()=> {
-      this.clear();
-      this.ctx.fillText("1", (this.width / 2), (this.height / 2)); 
-    }, 1000);
-  };
-
-  renderWinScreen(winner) {
-    doGameAnimation = false;
-    this.clear();
-    this.ctx.fillStyle = "green";
-    this.ctx.textBaseline = "middle";
-    this.ctx.textAlign = "center";
-    this.ctx.font = "32px Audiowide";
-    this.ctx.fillText(`${winner} won!`, (this.width / 2), (this.height / 2)- 25); 
-    this.ctx.fillText(`Click for the next game`, (this.width / 2), (this.height / 2) + 25); 
-  };
 
 };

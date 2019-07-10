@@ -7,9 +7,15 @@ class GameManager{
     this.keys = {};
   };
 
+  // Sounds -------------------------------------------------------------------------------------------
+  
   soundPing = new Sound("./aud/ping.mp3", false);
   soundHit = new Sound("./aud/hit.mp3", false);
+  soundIntro = new Sound("./aud/intro-screen.mp3", true);
+  soundGame = new Sound("./aud/defense-line.mp3", true);
 
+  // Keystroke listeners ------------------------------------------------------------------------------
+  
   addKeystrokeListeners() {
     window.addEventListener("keydown", (e) => {
       this.keys[e.keyCode] = true;
@@ -20,8 +26,10 @@ class GameManager{
     });
   };
 
+  // Collision detection ------------------------------------------------------------------------------
+
   calcBallYSpeedAdjuster(bat) {  // When hitting a bat, the ball's Y speed gets adjusted depending on WHERE it hits on the bat
-    let ySpeedAdjuster = ( (this.ball.yCenter - bat.yCenter) / bat.height ) * 1.2 * this.ball.xSpeed  // The 1.2 just makes the effect more extreme
+    let ySpeedAdjuster = ( (this.ball.yCenter - bat.yCenter) / bat.height ) * 0.8 * this.ball.xSpeed  // The scalar factor can just make the effect more or less extreme
     if(this.ball.xSpeed < 0) {
       return -ySpeedAdjuster;
     } else {
@@ -90,6 +98,8 @@ class GameManager{
     {this.player2.ySpeed = 0;}
   }
 
+  // Health and Score  -------------------------------------------------------------------------------------
+
   updateHealthAndScore() {
     // Health
     if(this.ball.xLeft <= 0) {
@@ -106,32 +116,154 @@ class GameManager{
     if(this.player2.health === 0) {
       this.player1.score += 1;
     }
-  }
+  };
 
   resetHealths() {
     this.player1.health = this.player1.healthInitial;
     this.player2.health = this.player2.healthInitial;
-  }
+  };
 
   resetScores() {
     this.player1.score = 0;
     this.player2.score = 0;
-  }
+  };
 
   renderHealthAndScore() {
-    $("#health-player-1").html(this.player1.health);
-    $("#health-player-2").html(this.player2.health);
+    document.getElementById("health-player-1").max = this.player1.healthInitial;  // QU! How to do this in jquery? $("#health-player-1").max = number   // doesn't seem to work   
+    document.getElementById("health-player-2").max = this.player2.healthInitial;
+    $("#health-player-1").val(this.player1.health);
+    $("#health-player-2").val(this.player2.health);
     $("#score-player-1").html(this.player1.score);
     $("#score-player-2").html(this.player2.score);
-  }
+  };
+
+  // Winning  -------------------------------------------------------------------------------------
 
   checkForWin() {
     if(this.player1.health === 0) {
-      this.canvas.renderWinScreen("Player 2");
+      this.renderWinScreen("Player 2");
+      $("#game-canvas").on("click", this.startNextGame);  // Set up START event listener (click on canvas) TODO! This doesn't really belong here, need to refactor
     }
     if(this.player2.health === 0) {
-      this.canvas.renderWinScreen("Player 1");
+      this.renderWinScreen("Player 1");
+      $("#game-canvas").on("click", this.startNextGame);  // Set up START event listener (click on canvas) TODO! This doesn't really belong here, need to refactor
     }
+  };
+
+  renderWinScreen(winner) {
+    this.canvas.doGameAnimation = false;
+    this.canvas.clear();
+    this.canvas.ctx.fillStyle = "green";
+    this.canvas.ctx.textBaseline = "middle";
+    this.canvas.ctx.textAlign = "center";
+    this.canvas.ctx.font = "32px Audiowide";
+    this.canvas.ctx.fillText(`${winner} won!`, (this.canvas.width / 2), (this.canvas.height / 2)- 25); 
+    this.canvas.ctx.fillText(`Click for the next game`, (this.canvas.width / 2), (this.canvas.height / 2) + 25); 
+  };
+
+  // Starting / resetting game  -----------------------------------------------------------------------
+
+  renderStartScreen() {
+    this.canvas.clear();
+    this.canvas.renderGameBackground(); // Add the background to the canvas
+    this.canvas.ctx.fillStyle = "green";
+    this.canvas.ctx.textBaseline = "middle";
+    this.canvas.ctx.textAlign = "center";
+    this.canvas.ctx.font = "32px Audiowide";
+    this.canvas.ctx.fillText("Click to start", (this.canvas.width / 2), (this.canvas.height / 2));
+    $("#game-canvas").on("click", this.startNextGame)  // Set up START event listener (click on canvas)
+  };
+
+  renderCountdown() {
+    this.canvas.clear();
+    this.canvas.ctx.fillStyle = "green";
+    this.canvas.ctx.textBaseline = "middle";
+    this.canvas.ctx.textAlign = "center";
+    this.canvas.ctx.font = "32px Audiowide";
+    this.canvas.ctx.fillText("3", (this.canvas.width / 2), (this.canvas.height / 2)); 
+
+    setTimeout(()=> {
+      this.canvas.clear();
+      this.canvas.ctx.fillText("2", (this.canvas.width / 2), (this.canvas.height / 2)); 
+    }, 500);
+
+    setTimeout(()=> {
+      this.canvas.clear();
+      this.canvas.ctx.fillText("1", (this.canvas.width / 2), (this.canvas.height / 2)); 
+    }, 1000);
+  };
+
+  resetForNextGame() {
+    this.canvas.doGameAnimation = false;
+    this.resetHealths();
+    this.ball.resetSpeed();
+    this.ball.resetPos();
+    this.player1.resetPos();
+    this.player2.resetPos();
+
+    this.renderHealthAndScore();    
   }
+
+  resetForNewGame = () => {
+    this.canvas.doGameAnimation = false;
+    this.soundGame.stop();
+    this.soundIntro.play();
+
+    this.resetHealths();
+    this.resetScores();
+    this.ball.resetSpeed();
+    this.ball.resetPos();
+    this.player1.resetPos();
+    this.player2.resetPos();
+
+    this.renderHealthAndScore();    
+    this.renderStartScreen();
+  };
+
+  startNextGame = () => {
+    $("#game-canvas").off("click");  // Turn off start click listener
+
+    this.resetForNextGame();
+    this.canvas.doGameAnimation = true;
+
+    this.soundIntro.stop();
+    this.soundGame.play();
+
+    this.renderCountdown();    
+    setTimeout(()=>{window.requestAnimationFrame(this.gameAnimationStep)}, 1500);  // TODO! Fix this to use Promises or callbacks from countdown
+  };
+
+  // Animation order --------------------------------------------------------------------------------------
+
+  gameAnimationStep = () => {
+    if(!this.canvas.doGameAnimation){
+      return;
+    }   // Breaks out of the animation if doGameAnimation is false
+
+    // Game manager - check for collisions and keystrokes - update speeds, health, score
+    this.updateBallSpeed();  // Check for collisions and update ball speed
+    this.updateBatSpeed();   // Check for keystrokes and update bat speeds
+    this.updateHealthAndScore(); // Check for point scores and update health and score
+
+    // Update ball speed as game goes on
+    this.ball.xSpeed *=  1.0002 ;
+
+    // Update positions (back end) - of game objects, according to their speeds
+    this.ball.updatePos();
+    this.player1.updatePos();
+    this.player2.updatePos();
+
+    // Render: Render all objects on the canvas in their new positions
+    this.canvas.clear();
+    this.canvas.renderGameBackground();
+    this.ball.render();
+    this.player1.render();
+    this.player2.render();
+    this.renderHealthAndScore();
+    this.checkForWin();
+
+    // Loop
+    window.requestAnimationFrame(this.gameAnimationStep);
+  };
 
 };
