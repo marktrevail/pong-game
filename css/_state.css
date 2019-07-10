@@ -1,0 +1,4 @@
+#menu-area ul li:hover{
+  color: green;
+  cursor: pointer;
+}
