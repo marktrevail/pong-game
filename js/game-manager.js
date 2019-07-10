@@ -5,6 +5,8 @@ class GameManager{
     this.player1 = player1;
     this.player2 = player2;
     this.keys = {};
+    this.ballSpeedUpPerFrame = 1.0002 ;
+    this.ballAngleOffBatMultiplier = 0.8;
   };
 
   // Sounds -------------------------------------------------------------------------------------------
@@ -29,7 +31,7 @@ class GameManager{
   // Collision detection ------------------------------------------------------------------------------
 
   calcBallYSpeedAdjuster(bat) {  // When hitting a bat, the ball's Y speed gets adjusted depending on WHERE it hits on the bat
-    let ySpeedAdjuster = ( (this.ball.yCenter - bat.yCenter) / bat.height ) * 0.8 * this.ball.xSpeed  // The scalar factor can just make the effect more or less extreme
+    let ySpeedAdjuster = ( (this.ball.yCenter - bat.yCenter) / bat.height ) * this.ballAngleOffBatMultiplier * this.ball.xSpeed  // The scalar factor can just make the effect more or less extreme
     if(this.ball.xSpeed < 0) {
       return -ySpeedAdjuster;
     } else {
@@ -245,7 +247,7 @@ class GameManager{
     this.updateHealthAndScore(); // Check for point scores and update health and score
 
     // Update ball speed as game goes on
-    this.ball.xSpeed *=  1.0002 ;
+    this.ball.xSpeed *=  this.ballSpeedUpPerFrame ;
 
     // Update positions (back end) - of game objects, according to their speeds
     this.ball.updatePos();
