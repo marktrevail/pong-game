@@ -1,11 +1,12 @@
 class GameManager{
-  constructor(canvas, ball, player1, player2) {
+  constructor(canvas, ball, player1, player2, numHumanPlayers) {
     this.canvas = canvas;
     this.ball = ball;
     this.player1 = player1;
     this.player2 = player2;
+    this.numHumanPlayers = numHumanPlayers;
     this.keys = {};
-    this.ballSpeedUpPerFrame = 1.0002 ;
+    this.ballSpeedUpPerFrame = 1.00025 ;
     this.ballAngleOffBatMultiplier = 0.8;
   };
 
@@ -76,29 +77,46 @@ class GameManager{
     // Player 1 ---------------------
 
     // q (up)
-    if (81 in this.keys && this.player1.yTop > 0) {   // Not hitting boundary
-      this.player1.ySpeed = -this.player1.ySpeedMax;
+    if (81 in this.keys && this.player1.yTop > 0) {   // Not already at boundary
+      this.player1.ySpeed = -Math.min(this.player1.ySpeedMax, this.player1.yTop)   // Take either the normal speed OR the speed required to get the player to the boundary (if very close)
     } else
     // a (down)
-    if (65 in this.keys && this.player1.yBottom < this.canvas.height) {
-      this.player1.ySpeed = this.player1.ySpeedMax;
+    if (65 in this.keys && this.player1.yBottom < this.canvas.height) {  // Not already at boundary
+      this.player1.ySpeed = Math.min(this.player1.ySpeedMax, this.canvas.height - this.player1.yBottom)   // Take either the normal speed OR the speed required to get the player to the boundary (if very close)
     } else
     // No speed
     {this.player1.ySpeed = 0;};
   
     // Player 2 ---------------------
 
-    // up
-    if (38 in this.keys && this.player2.yTop > 0) {
-      this.player2.ySpeed = -this.player2.ySpeedMax;
-    } else
-    // down
-    if (40 in this.keys && this.player2.yBottom < this.canvas.height) {
-      this.player2.ySpeed = this.player2.ySpeedMax;
-    } else
-    // No speed
-    {this.player2.ySpeed = 0;}
-  }
+    // Check for human or AI
+    if(this.numHumanPlayers = 2) {
+      // up
+      if (38 in this.keys && this.player2.yTop > 0) {
+        this.player2.ySpeed = -Math.min(this.player2.ySpeedMax, this.player2.yTop)   // Take either the normal speed OR the speed required to get the player to the boundary (if very close)
+      } else
+      // down
+      if (40 in this.keys && this.player2.yBottom < this.canvas.height) {
+        this.player2.ySpeed = Math.min(this.player2.ySpeedMax, this.canvas.height - this.player2.yBottom)   // Take either the normal speed OR the speed required to get the player to the boundary (if very close)
+      } else
+      // No speed
+      {this.player2.ySpeed = 0;}
+    };
+
+    if(this.numHumanPlayers = 1) {
+      // up
+      if (this.ball.yCenter < this.player2.yCenter && this.player2.yTop > 0) {
+        this.player2.ySpeed = -Math.min(this.player2.ySpeedMax, this.player2.yTop)   // Take either the normal speed OR the speed required to get the player to the boundary (if very close)
+      } else
+      // down
+      if (this.ball.yCenter > this.player2.yCenter && this.player2.yBottom < this.canvas.height) {
+        this.player2.ySpeed = Math.min(this.player2.ySpeedMax, this.canvas.height - this.player2.yBottom)   // Take either the normal speed OR the speed required to get the player to the boundary (if very close)
+      } else
+      // No speed
+      {this.player2.ySpeed = 0;}      
+    };
+
+  };
 
   // Health and Score  -------------------------------------------------------------------------------------
 
