@@ -90,7 +90,7 @@ class GameManager{
     // Player 2 ---------------------
 
     // Check for human or AI
-    if(this.numHumanPlayers = 2) {
+    if(this.numHumanPlayers === 2) {
       // up
       if (38 in this.keys && this.player2.yTop > 0) {
         this.player2.ySpeed = -Math.min(this.player2.ySpeedMax, this.player2.yTop)   // Take either the normal speed OR the speed required to get the player to the boundary (if very close)
@@ -103,7 +103,7 @@ class GameManager{
       {this.player2.ySpeed = 0;}
     };
 
-    if(this.numHumanPlayers = 1) {
+    if(this.numHumanPlayers === 1) {
       // up
       if (this.ball.yCenter < this.player2.yCenter && this.player2.yTop > 0) {
         this.player2.ySpeed = -Math.min(this.player2.ySpeedMax, this.player2.yTop)   // Take either the normal speed OR the speed required to get the player to the boundary (if very close)
@@ -162,11 +162,11 @@ class GameManager{
   checkForWin() {
     if(this.player1.health === 0) {
       this.renderWinScreen("Player 2");
-      $("#game-canvas").on("click", this.startNextGame);  // Set up START event listener (click on canvas) TODO! This doesn't really belong here, need to refactor
+      $("#game-canvas").on("click", this.startNextGame);  // Set up START event listener (click on canvas)
     }
     if(this.player2.health === 0) {
       this.renderWinScreen("Player 1");
-      $("#game-canvas").on("click", this.startNextGame);  // Set up START event listener (click on canvas) TODO! This doesn't really belong here, need to refactor
+      $("#game-canvas").on("click", this.startNextGame);  // Set up START event listener (click on canvas)
     }
   };
 
@@ -226,6 +226,8 @@ class GameManager{
 
   resetForNewGame = () => {
     this.canvas.doGameAnimation = false;
+    $("#game-canvas").off("click")
+
     this.soundGame.stop();
     this.soundIntro.play();
 

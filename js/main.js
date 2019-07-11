@@ -9,47 +9,71 @@ $(function() {
   gameCanvas.create(); // Add the canvas in and create the context  
 
   // --------------------------------------------------------------------------------------
-  // Set up 1-player game (second bat is a bit slower)
+  // Set up 1 and 2 player games
   // --------------------------------------------------------------------------------------
 
-  // Create the game objects and initial positions & speeds
+  // Create universal game objects
   var ball = new Ball(gameCanvas.ctx, 7, "green", gameCanvas.width/2, gameCanvas.height/2, 6, 0);
   var player1 = new Bat(gameCanvas.ctx, 10, 60, "black", 15, gameCanvas.height/2, 5, 5);
-  var player2 = new Bat(gameCanvas.ctx, 10, 60, "black", gameCanvas.width - 15, gameCanvas.height/2, 5, 3); // Slower
-  
-  var gameManager = new GameManager(gameCanvas, ball, player1, player2, 1);  // 1 Player game
 
+  // 1-player game
+  var player2Machine = new Bat(gameCanvas.ctx, 10, 60, "black", gameCanvas.width - 15, gameCanvas.height/2, 5, 3); // Slower
+  var gameManager1Player = new GameManager(gameCanvas, ball, player1, player2Machine, 1);  // 1 Player game
+
+  // 2-player game
+  var player2Human = new Bat(gameCanvas.ctx, 10, 60, "black", gameCanvas.width - 15, gameCanvas.height/2, 5, 5);
+  var gameManager2Player = new GameManager(gameCanvas, ball, player1, player2Human, 2); 
 
   // --------------------------------------------------------------------------------------
-  // Add settings to any game
+  // Add settings to both games
   // --------------------------------------------------------------------------------------
 
   // Set up keystroke listening
-  gameManager.addKeystrokeListeners();
+  gameManager1Player.addKeystrokeListeners();
+  gameManager2Player.addKeystrokeListeners();
 
   // Make music a bit quieter
-  gameManager.soundIntro.sound.volume = 0.3;
-  gameManager.soundGame.sound.volume = 0.3;
+  gameManager1Player.soundIntro.sound.volume = 0.3;
+  gameManager1Player.soundGame.sound.volume = 0.3;
+  gameManager2Player.soundIntro.sound.volume = 0.3;
+  gameManager2Player.soundGame.sound.volume = 0.3;
 
   // --------------------------------------------------------------------------------------
   // Navigate the menu screen!
   // --------------------------------------------------------------------------------------
 
+  $("#menu-start-1-player").on("click", start1PlayerGame);
   $("#menu-start-2-player").on("click", start2PlayerGame);
-  $("#button-reset").on("click", resetForNewGameAndBackToMenu);
 
-  function start2PlayerGame() {
-    gameManager.renderStartScreen();
+  function start1PlayerGame() {
+    gameManager1Player.renderStartScreen();
+    gameManager2Player.soundIntro.stop();
     $("#menu-area").toggle();
     $("#game-area").toggle();
+    $("#button-reset").off("click");
+    $("#button-reset").on("click", reset1PlayerGameAndBackToMenu);
   };
 
-  function resetForNewGameAndBackToMenu() {
-    gameManager.resetForNewGame();
+  function start2PlayerGame() {
+    gameManager2Player.renderStartScreen();
+    gameManager1Player.soundIntro.stop();
+    $("#menu-area").toggle();
+    $("#game-area").toggle();
+    $("#button-reset").off("click");
+    $("#button-reset").on("click", reset2PlayerGameAndBackToMenu);
+  };
+
+  function reset1PlayerGameAndBackToMenu() {
+    gameManager1Player.resetForNewGame();  
     $("#menu-area").toggle();
     $("#game-area").toggle();    
   };
 
+  function reset2PlayerGameAndBackToMenu() {
+    gameManager2Player.resetForNewGame();  
+    $("#menu-area").toggle();
+    $("#game-area").toggle();    
+  };
 
 
 
