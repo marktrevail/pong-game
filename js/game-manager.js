@@ -40,7 +40,7 @@ class GameManager{
     };
   };
 
-  updateBallSpeed() {
+  detectCollisionAndUpdateBallSpeed() {
 
     // Check vs boundaries
     if(this.ball.xLeft <= 0 || this.ball.xRight >= this.canvas.width) {
@@ -148,70 +148,20 @@ class GameManager{
     this.player2.score = 0;
   };
 
-  renderHealthAndScore() {
-    document.getElementById("health-player-1").max = this.player1.healthInitial;  // QU! How to do this in jquery? $("#health-player-1").max = number   // doesn't seem to work   
-    document.getElementById("health-player-2").max = this.player2.healthInitial;
-    $("#health-player-1").val(this.player1.health);
-    $("#health-player-2").val(this.player2.health);
-    $("#score-player-1").html(this.player1.score);
-    $("#score-player-2").html(this.player2.score);
-  };
-
   // Winning  -------------------------------------------------------------------------------------
 
   checkForWin() {
     if(this.player1.health === 0) {
-      this.renderWinScreen("Player 2");
+      this.canvas.renderWinScreen("Player 2");
       $("#game-canvas").on("click", this.startNextGame);  // Set up START event listener (click on canvas)
     }
     if(this.player2.health === 0) {
-      this.renderWinScreen("Player 1");
+      this.canvas.renderWinScreen("Player 1");
       $("#game-canvas").on("click", this.startNextGame);  // Set up START event listener (click on canvas)
     }
   };
 
-  renderWinScreen(winner) {
-    this.canvas.doGameAnimation = false;
-    this.canvas.clear();
-    this.canvas.ctx.fillStyle = "green";
-    this.canvas.ctx.textBaseline = "middle";
-    this.canvas.ctx.textAlign = "center";
-    this.canvas.ctx.font = "32px Audiowide";
-    this.canvas.ctx.fillText(`${winner} won!`, (this.canvas.width / 2), (this.canvas.height / 2)- 25); 
-    this.canvas.ctx.fillText(`Click for the next game`, (this.canvas.width / 2), (this.canvas.height / 2) + 25); 
-  };
-
-  // Starting / resetting game  -----------------------------------------------------------------------
-
-  renderStartScreen() {
-    this.canvas.clear();
-    this.canvas.renderGameBackground(); // Add the background to the canvas
-    this.canvas.ctx.fillStyle = "green";
-    this.canvas.ctx.textBaseline = "middle";
-    this.canvas.ctx.textAlign = "center";
-    this.canvas.ctx.font = "32px Audiowide";
-    this.canvas.ctx.fillText("Click to start", (this.canvas.width / 2), (this.canvas.height / 2));
-    $("#game-canvas").on("click", this.startNextGame)  // Set up START event listener (click on canvas)
-  };
-
-  renderCountdown() {
-    this.canvas.clear();
-    this.canvas.ctx.fillStyle = "green";
-    this.canvas.ctx.textBaseline = "middle";
-    this.canvas.ctx.textAlign = "center";
-    this.canvas.ctx.font = "32px Audiowide";
-    this.canvas.ctx.fillText("3", (this.canvas.width / 2), (this.canvas.height / 2)); 
-
-    setTimeout(()=> {
-      this.canvas.clear();
-      this.canvas.ctx.fillText("2", (this.canvas.width / 2), (this.canvas.height / 2)); 
-    }, 500);
-
-    setTimeout(()=> {
-      this.canvas.clear();
-      this.canvas.ctx.fillText("1", (this.canvas.width / 2), (this.canvas.height / 2)); 
-    }, 1000);
-  };
+  // Resetting / Starting game  -----------------------------------------------------------------------
 
   resetForNextGame() {
     this.canvas.doGameAnimation = false;
@@ -221,7 +171,7 @@ class GameManager{
     this.player1.resetPos();
     this.player2.resetPos();
 
-    this.renderHealthAndScore();    
+    this.canvas.renderHealthAndScore(this.player1, this.player2);    
   }
 
   resetForNewGame = () => {
@@ -238,7 +188,7 @@ class GameManager{
     this.player1.resetPos();
     this.player2.resetPos();
 
-    this.renderHealthAndScore();    
+    this.canvas.renderHealthAndScore(this.player1, this.player2);    
   };
 
   startNextGame = () => {
@@ -250,7 +200,7 @@ class GameManager{
     this.soundIntro.stop();
     this.soundGame.play();
 
-    this.renderCountdown();    
+    this.canvas.renderCountdown();    
     setTimeout(()=>{window.requestAnimationFrame(this.gameAnimationStep)}, 1500);  // TODO! Fix this to use Promises or callbacks from countdown
   };
 
@@ -261,8 +211,8 @@ class GameManager{
       return;
     }   // Breaks out of the animation if doGameAnimation is false
 
-    // Game manager - check for collisions and keystrokes - update speeds, health, score
-    this.updateBallSpeed();  // Check for collisions and update ball speed
+    // Check for collisions and keystrokes - update speeds, health, score
+    this.detectCollisionAndUpdateBallSpeed();  // Check for collisions and update ball speed
     this.updateBatSpeed();   // Check for keystrokes and update bat speeds
     this.updateHealthAndScore(); // Check for point scores and update health and score
 
@@ -280,7 +230,7 @@ class GameManager{
     this.ball.render();
     this.player1.render();
     this.player2.render();
-    this.renderHealthAndScore();
+    this.canvas.renderHealthAndScore(this.player1, this.player2);    
     this.checkForWin();
 
     // Loop

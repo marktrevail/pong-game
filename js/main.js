@@ -46,7 +46,8 @@ $(function() {
   $("#menu-start-2-player").on("click", start2PlayerGame);
 
   function start1PlayerGame() {
-    gameManager1Player.renderStartScreen();
+    gameManager1Player.canvas.renderStartScreen();
+    $("#game-canvas").on("click", gameManager1Player.startNextGame)
     gameManager2Player.soundIntro.stop();
     $("#menu-area").toggle();
     $("#game-area").toggle();
@@ -55,7 +56,8 @@ $(function() {
   };
 
   function start2PlayerGame() {
-    gameManager2Player.renderStartScreen();
+    gameManager2Player.canvas.renderStartScreen();
+    $("#game-canvas").on("click", gameManager2Player.startNextGame)
     gameManager1Player.soundIntro.stop();
     $("#menu-area").toggle();
     $("#game-area").toggle();
