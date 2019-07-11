@@ -52,7 +52,7 @@ class GameManager{
     };
 
     // Check vs Player 1
-    if(     (this.ball.xLeft <= this.player1.xRight && this.ball.xRight >= this.player1.xLeft)
+    if(     (this.ball.xLeft <= this.player1.xRight)
          && (this.ball.yBottom >= this.player1.yTop && this.ball.yTop <= this.player1.yBottom)
          && this.ball.xSpeed < 0 )   // Travelling left (as don't want ball to get stuck between wall and bat)
          {
@@ -62,7 +62,7 @@ class GameManager{
     };
 
     // Check vs Player 2
-    if(     (this.ball.xRight >= this.player2.xLeft && this.ball.xLeft <= this.player2.xRight)
+    if(     (this.ball.xRight >= this.player2.xLeft)
          && (this.ball.yBottom >= this.player2.yTop && this.ball.yTop <= this.player2.yBottom) 
          && this.ball.xSpeed >= 0 )   // Travelling right         
          {

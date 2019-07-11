@@ -1,6 +1,6 @@
 class Bat {
-  constructor(context, width, height, fillColor, xCenterInitial, yCenterInitial, healthInitial, ySpeedMax) {
-    this.ctx = context;
+  constructor(gameCanvas, width, height, fillColor, xCenterInitial, yCenterInitial, healthInitial, ySpeedMax) {
+    this.gameCanvas = gameCanvas;
     this.width = width;
     this.height = height;
     this.fillColor = fillColor;
@@ -25,8 +25,8 @@ class Bat {
   }
 
   render() {
-    this.ctx.fillStyle = this.fillColor;
-    this.ctx.fillRect(this.xLeft, this.yTop, this.width, this.height);  // Rectangle will be centered on the posX, posY
+    this.gameCanvas.ctx.fillStyle = this.fillColor;
+    this.gameCanvas.ctx.fillRect(this.xLeft, this.yTop, this.width, this.height);  // Rectangle will be centered on the posX, posY
   }
 
   updatePos() {

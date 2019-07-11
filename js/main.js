@@ -13,15 +13,15 @@ $(function() {
   // --------------------------------------------------------------------------------------
 
   // Create universal game objects
-  var ball = new Ball(gameCanvas.ctx, 7, "green", gameCanvas.width/2, gameCanvas.height/2, 6, 0);
-  var player1 = new Bat(gameCanvas.ctx, 10, 60, "black", 15, gameCanvas.height/2, 5, 5);
+  var ball = new Ball(gameCanvas, 7, "green", gameCanvas.width/2, gameCanvas.height/2, 6, 0);
+  var player1 = new Bat(gameCanvas, 10, 60, "black", 15, gameCanvas.height/2, 5, 5);
 
   // 1-player game
-  var player2Machine = new Bat(gameCanvas.ctx, 10, 60, "black", gameCanvas.width - 15, gameCanvas.height/2, 5, 4); // Slower
+  var player2Machine = new Bat(gameCanvas, 10, 60, "black", gameCanvas.width - 15, gameCanvas.height/2, 5, 4); // Slower
   var gameManager1Player = new GameManager(gameCanvas, ball, player1, player2Machine, 1);  // 1 Player game
 
   // 2-player game
-  var player2Human = new Bat(gameCanvas.ctx, 10, 60, "black", gameCanvas.width - 15, gameCanvas.height/2, 5, 5);
+  var player2Human = new Bat(gameCanvas, 10, 60, "black", gameCanvas.width - 15, gameCanvas.height/2, 5, 5);
   var gameManager2Player = new GameManager(gameCanvas, ball, player1, player2Human, 2); 
 
   // --------------------------------------------------------------------------------------
@@ -78,8 +78,22 @@ $(function() {
   };
 
 
-  // Debugging
-  // setInterval(()=> {console.log(player2Machine.yTop)} , 500)
+  // // Debugging
+  // setInterval(()=> {
+    
+  //   console.log(`player1 yTop ${player1.yTop}`)
+  //   console.log(`player2Machine yTop ${player2Machine.yTop}`)
+  //   console.log(`player2Human yTop ${player2Human.yTop}`)
+
+  //   console.log(`player1 ySpeed ${player1.ySpeed}`)    
+  //   console.log(`player2Machine ySpeed ${player2Machine.ySpeed}`)
+  //   console.log(`player2Human ySpeed ${player2Human.ySpeed}`)
+
+  //   console.log(`Ball yTop ${ball.yTop}`)
+  //   console.log(`Ball xSpeed ${ball.xSpeed}`)
+  //   console.log(`Ball ySpeed ${ball.ySpeed}`)    
+
+  // } , 500)
 
 
 });

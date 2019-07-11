@@ -1,6 +1,6 @@
 class Ball {
-  constructor(context, radius, fillColor, xCenterInitial, yCenterInitial, xSpeedInitial, ySpeedInitial) {
-    this.ctx = context;
+  constructor(gameCanvas, radius, fillColor, xCenterInitial, yCenterInitial, xSpeedInitial, ySpeedInitial) {
+    this.gameCanvas = gameCanvas;
     this.radius = radius;
     this.fillColor = fillColor; 
 
@@ -21,15 +21,23 @@ class Ball {
   };
 
   render() {
-    this.ctx.beginPath();
-    this.ctx.arc(this.xCenter, this.yCenter, this.radius, 2 * Math.PI, false);
-    this.ctx.fillStyle = this.fillColor;
-    this.ctx.fill();
+    this.gameCanvas.ctx.beginPath();
+    this.gameCanvas.ctx.arc(this.xCenter, this.yCenter, this.radius, 2 * Math.PI, false);
+    this.gameCanvas.ctx.fillStyle = this.fillColor;
+    this.gameCanvas.ctx.fill();
   };
 
   updatePos() {
     this.xCenter += this.xSpeed;
-    this.yCenter += this.ySpeed;
+
+    // Y-speed - need to make sure it doesn't take it off the canvas
+    if(this.yTop + this.ySpeed < 0) {  // Moves off the top 
+      this.yCenter -= this.yTop;
+    } else if (this.yBottom + this.ySpeed > this.gameCanvas.height){  // Moving off the bottom
+      this.yCenter += ( this.gameCanvas.height - this.yBottom )
+    } else {
+      this.yCenter += this.ySpeed;
+    }
 
     // Update the edge values too
     this.xLeft = this.xCenter - this.radius;
