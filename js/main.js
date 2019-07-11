@@ -17,7 +17,7 @@ $(function() {
   var player1 = new Bat(gameCanvas.ctx, 10, 60, "black", 15, gameCanvas.height/2, 5, 5);
 
   // 1-player game
-  var player2Machine = new Bat(gameCanvas.ctx, 10, 60, "black", gameCanvas.width - 15, gameCanvas.height/2, 5, 3); // Slower
+  var player2Machine = new Bat(gameCanvas.ctx, 10, 60, "black", gameCanvas.width - 15, gameCanvas.height/2, 5, 4); // Slower
   var gameManager1Player = new GameManager(gameCanvas, ball, player1, player2Machine, 1);  // 1 Player game
 
   // 2-player game
@@ -76,7 +76,8 @@ $(function() {
   };
 
 
-
+  // Debugging
+  // setInterval(()=> {console.log(player2Machine.yTop)} , 500)
 
 
 });
