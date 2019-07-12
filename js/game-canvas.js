@@ -103,3 +103,6 @@ class GameCanvas {
   };
 
 };
+
+
+module.exports = GameCanvas;
