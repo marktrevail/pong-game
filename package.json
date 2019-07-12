@@ -1,0 +1,22 @@
+{
+  "name": "pong-game",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "jasmine"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/marktrevail/pong-game.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/marktrevail/pong-game/issues"
+  },
+  "homepage": "https://github.com/marktrevail/pong-game#readme",
+  "devDependencies": {
+    "jasmine": "^3.4.0"
+  }
+}
