@@ -6,9 +6,18 @@ describe("Ball class:", function() {   // This is a top-level suite, for the cla
   var gameCanvas = new GameCanvas(550, 340, "black", "white"); // Create a new canvas
   var ball = new Ball(gameCanvas, 7, "green", gameCanvas.width/2, gameCanvas.height/2, 6, 0);
 
-  it("Base properties should be defined", function() {
-    expect(ball.xCenter).toBeDefined();
-    expect(ball.yCenter).toBeDefined();
+  describe("Property definition:", function() {   // This is a top-level suite, for the class
+
+    it("Position", function() {
+      expect(ball.xCenter).toBeDefined();
+      expect(ball.yCenter).toBeDefined();
+    });
+
+    it("Shape and Appearance", function() {
+      expect(ball.radius).toBeDefined();
+      expect(ball.fillColor).toBeDefined();
+    });   
+
   });
 
 });
